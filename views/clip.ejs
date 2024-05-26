@@ -4,13 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clipboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <h1>Your Clipboard</h1>
-    <form action="/clip/<%= clipboard.url %>" method="POST">
-        <textarea name="content" rows="10" cols="30"><%= clipboard.content %></textarea>
+    <div class="wrapper">
+   
+    <form id="clipboardForm">
+        <textarea id="content" name="content" rows="10" cols="30"><%= clipboard.content %></textarea>
         <br>
-        <button type="submit">Update Clipboard</button>
+        <button class="btn-Save" type="submit">Update Clipboard</button>
     </form>
+<div class="link_shown_box">
+    <% if (typeof url !== 'undefined') { %>
+        <p>Share this link: <a href="<%= url %>"><%= url %></a></p>
+        <button onclick="copyToClipboard('<%= url %>')">Copy to Clipboard</button>
+    <% } %>
+</div>
+    </div>
+    <script>
+        const socket = io();
+
+        // Join the clipboard room
+        const url = '<%= clipboard.url %>';
+        socket.emit('join_clipboard', url);
+
+        // Handle form submission
+        document.getElementById('clipboardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const content = document.getElementById('content').value;
+            socket.emit('update_clipboard', { url, content });
+        });
+
+        // Listen for updates from the server
+        socket.on('clipboard_updated', (newContent) => {
+            document.getElementById('content').value = newContent;
+        });
+
+        // Function to copy the URL to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('URL copied to clipboard');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
 </body>
 </html>

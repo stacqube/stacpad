@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Clipboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Create a Clipboard</h1>
+    <div class="wrapper">
+      
     <form action="/create" method="POST">
-        <textarea name="content" rows="10" cols="30" placeholder="Enter your text here..."></textarea>
+        <textarea name="content" rows="30" cols="100" placeholder="Enter your text here..."></textarea>
         <br>
-        <button type="submit">Create Clipboard</button>
+         <div class="btn_section">
+            <button class="btn-Save" type="submit">Save</button>
+            <button class="btn_reset" >Reset</button>
+         </div>
+       
     </form>
+    <!--Show Link Below and a copy to clipoard-->
+    </div>
+  
 </body>
 </html>
     

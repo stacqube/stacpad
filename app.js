@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
@@ -48,7 +47,8 @@ app.get('/clip/:url', async (req, res) => {
     const clipboard = await Clipboard.findOne({ url });
     
     if (clipboard) {
-        res.render('clip', { clipboard });
+        const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+        res.render('clip', { clipboard, url: fullUrl });
     } else {
         res.status(404).send('Clipboard not found');
     }
