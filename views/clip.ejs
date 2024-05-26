@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard</title>
+</head>
+<body>
+    <h1>Your Clipboard</h1>
+    <form action="/clip/<%= clipboard.url %>" method="POST">
+        <textarea name="content" rows="10" cols="30"><%= clipboard.content %></textarea>
+        <br>
+        <button type="submit">Update Clipboard</button>
+    </form>
+</body>
+</html>
